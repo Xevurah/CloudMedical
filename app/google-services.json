@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "680756049275",
+    "firebase_url": "https://cloudmedical-c1449.firebaseio.com",
+    "project_id": "cloudmedical-c1449",
+    "storage_bucket": "cloudmedical-c1449.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680756049275:android:dff55dabdd922d0bfc79de",
+        "android_client_info": {
+          "package_name": "com.example.loginactivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680756049275-4e1ti0stioaprcfj5no1u0at41dsrpog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtQhAscGbc9LrH07tgEQMH7zNGj20qXcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "680756049275-4e1ti0stioaprcfj5no1u0at41dsrpog.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

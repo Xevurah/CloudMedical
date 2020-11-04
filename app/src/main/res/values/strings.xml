@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">CloudMedical</string>
+    <string name="prefs_file">com.example.loginactivity.PREFERENCE_FILE_KEY</string>
+    <string name="facebook_app_id">348207999605955</string>
+    <string name="fb_login_protocol_scheme">fb348207999605955</string>
+</resources>
