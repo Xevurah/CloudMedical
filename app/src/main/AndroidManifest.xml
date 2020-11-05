@@ -11,6 +11,7 @@
         android:roundIcon="@drawable/logo_png"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar" >
+        <activity android:name=".MenuActivity" />
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".AuthActivity"
