@@ -10,12 +10,21 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">Inicio</string>
+    <string name="menu_history">Diagnóstico</string>
+    <string name="menu_devices">Dispositivo</string>
+    <string name="menu_syphtoms">Sintomas</string>
 
     <string name="user">User</string>
     <string name="datos_del_usuario">Datos del usuario</string>
+    <string name="datos_del_dispositivo">Detalles del dispositivo</string>
+    <string name="detalles_del_dispositivo_label">Dispositivo:</string>
+    <string name="detalles_del_dispositivo">Direccion Mac del dispositivo</string>
+    <string name="detalles_de_version_label">Version:</string>
+    <string name="detalles_de_version">Version del dispositivo</string>
+    <string name="detalles_del_Bluetooth_label">Bluetooth:</string>
+    <string name="detalles_del_Bluetooth">Direccion Mac del Bluetooth</string>
+    <string name="status">Status</string>
     <string name="pasos">Pasos (#)</string>
     <string name="frecuencia_cardiaca_ppm">Frecuencia Cardiaca (ppm)</string>
     <string name="bateria_del_dispositivo">Bateria del dispositivo (%)</string>

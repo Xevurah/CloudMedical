@@ -3,6 +3,8 @@
     <item android:drawable="@color/black" /><!-- color de fondo -->
     <item>
         <bitmap
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/logo_inverted_ico" /> <!-- imagen centrada -->
     </item>
 </layer-list>

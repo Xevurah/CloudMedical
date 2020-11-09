@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#202732"
+    tools:context=".ui.diagnose.DiagnoseFragment">
+
+    <ScrollView
+        android:id="@+id/authLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+
+                android:id="@+id/tableLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/button_rounded"
+                android:stretchColumns="2">
+
+                <TableRow
+                    android:id="@+id/StatDataRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- first element of the row-->
+
+                    <TextView
+                        android:id="@+id/StatDataView"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_span="3"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center_vertical"
+                        android:text="@string/datos_del_dispositivo"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/DeviceStatRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- first element of the row-->
+                    <TextView
+                        android:background="@drawable/button_toprounded_white"
+                        android:id="@+id/DeviceView"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginEnd="17dp"
+                        android:paddingTop="8dp"
+                        android:layout_span="3"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="start"
+                        android:paddingStart="25dp"
+                        android:paddingEnd="0dp"
+                        android:text="@string/status"
+                        android:textColor="@color/darkslategrey"
+                        android:textSize="18sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/DeviceRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- first element of the row-->
+
+                        <TextView
+                            android:background="@drawable/button_white"
+                            android:id="@+id/DeviceLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="17dp"
+                            android:layout_marginEnd="17dp"
+                            android:fontFamily="sans-serif-black"
+                            android:gravity="start"
+                            android:paddingStart="25dp"
+                            android:paddingEnd="0dp"
+                            android:layout_span="3"
+                            android:text="@string/detalles_del_dispositivo_label"
+                            android:textColor="@color/darkgrey"
+                            android:textSize="18sp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/DeviceTextRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- first element of the row-->
+
+                    <TextView
+                        android:background="@drawable/button_white"
+                        android:id="@+id/DeviceText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_span="3"
+                        android:gravity="start"
+                        android:paddingStart="25dp"
+                        android:paddingEnd="0dp"
+                        android:text="@string/detalles_del_dispositivo"
+                        android:textColor="@color/darkslategrey"
+                        android:textSize="18sp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/VersionRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- first element of the row-->
+
+                    <TextView
+                        android:background="@drawable/button_white"
+                        android:id="@+id/VersionLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="start"
+                        android:paddingStart="25dp"
+                        android:paddingEnd="0dp"
+                        android:layout_span="3"
+                        android:text="@string/detalles_de_version_label"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="18sp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/VersionTextRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- first element of the row-->
+
+                    <TextView
+                        android:background="@drawable/button_white"
+                        android:id="@+id/VersionText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_span="3"
+                        android:gravity="start"
+                        android:paddingStart="25dp"
+                        android:paddingEnd="0dp"
+                        android:text="@string/detalles_de_version"
+                        android:textColor="@color/darkslategrey"
+                        android:textSize="18sp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/BluetoothRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- first element of the row-->
+
+                    <TextView
+                        android:background="@drawable/button_white"
+                        android:id="@+id/BluetoothLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="start"
+                        android:paddingStart="25dp"
+                        android:paddingEnd="0dp"
+                        android:layout_span="3"
+                        android:text="@string/detalles_del_Bluetooth_label"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="18sp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/BluetoothTextRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- first element of the row-->
+
+                    <TextView
+                        android:background="@drawable/button_bottomrounded_white"
+                        android:id="@+id/BluetoothText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_span="3"
+                        android:gravity="start"
+                        android:paddingStart="25dp"
+                        android:paddingEnd="0dp"
+                        android:text="@string/detalles_del_Bluetooth"
+                        android:textColor="@color/darkslategrey"
+                        android:textSize="18sp" />
+
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

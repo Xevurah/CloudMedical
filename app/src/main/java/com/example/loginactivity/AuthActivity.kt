@@ -56,11 +56,12 @@ class AuthActivity : AppCompatActivity() {
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val email = prefs.getString("email", null)
+        val name = prefs.getString("name", null)
         val provider = prefs.getString("provider", null)
 
-        if (email != null && provider != null) {
+        if (email != null && provider != null && name != null) {
             authLayout.visibility = View.INVISIBLE
-            showHome(email, ProviderType.valueOf(provider))
+            showHome(email, ProviderType.valueOf(provider),name)
         }
 
     }
@@ -76,7 +77,8 @@ class AuthActivity : AppCompatActivity() {
                         passwordEditText.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
+                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC, it.result?.user?.displayName?:""
+                            )
                         } else {
                             showAlert()
                         }
@@ -92,7 +94,8 @@ class AuthActivity : AppCompatActivity() {
                         passwordEditText.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
+                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC, it.result?.user?.displayName?:""
+                            )
                         } else {
                             showAlert()
                         }
@@ -106,6 +109,7 @@ class AuthActivity : AppCompatActivity() {
             val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestProfile()
                 .build()
 
             val googleClient = GoogleSignIn.getClient(this, googleConf)
@@ -135,7 +139,8 @@ class AuthActivity : AppCompatActivity() {
                                     if (it.isSuccessful) {
                                         showHome(
                                             it.result?.user?.email ?: "",
-                                            ProviderType.FACEBOOK
+                                            ProviderType.FACEBOOK,
+                                            it.result?.user?.displayName?:""
                                         )
                                     } else {
                                         showAlert()
@@ -168,11 +173,12 @@ class AuthActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email: String, provider: ProviderType) {
+    private fun showHome(email: String, provider: ProviderType, name:String) {
 
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
             putExtra("email", email)
             putExtra("provider", provider.name)
+            putExtra("name",name)
         }
         startActivity(homeIntent)
     }
@@ -202,7 +208,8 @@ class AuthActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                showHome(account.email ?: "", ProviderType.GOOGLE)
+                                showHome(account.email ?: "", ProviderType.GOOGLE, account.displayName ?:""
+                                )
                             } else {
                                 showAlert()
                             }
