@@ -2,6 +2,7 @@ package com.example.loginactivity
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -15,12 +16,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.auth.FacebookAuthCredential
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_auth.*
-import kotlin.concurrent.thread
 
 class AuthActivity : AppCompatActivity() {
 
@@ -57,11 +56,12 @@ class AuthActivity : AppCompatActivity() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val email = prefs.getString("email", null)
         val name = prefs.getString("name", null)
+        val photoURL = prefs.getString("photo", null)
         val provider = prefs.getString("provider", null)
 
         if (email != null && provider != null && name != null) {
             authLayout.visibility = View.INVISIBLE
-            showHome(email, ProviderType.valueOf(provider),name)
+            showHome(email, ProviderType.valueOf(provider),name,photoURL)
         }
 
     }
@@ -77,7 +77,7 @@ class AuthActivity : AppCompatActivity() {
                         passwordEditText.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC, it.result?.user?.displayName?:""
+                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC, it.result?.user?.displayName?:"",it.result?.user?.photoUrl.toString()
                             )
                         } else {
                             showAlert()
@@ -94,7 +94,7 @@ class AuthActivity : AppCompatActivity() {
                         passwordEditText.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC, it.result?.user?.displayName?:""
+                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC, it.result?.user?.displayName?:"",it.result?.user?.photoUrl.toString()
                             )
                         } else {
                             showAlert()
@@ -140,7 +140,8 @@ class AuthActivity : AppCompatActivity() {
                                         showHome(
                                             it.result?.user?.email ?: "",
                                             ProviderType.FACEBOOK,
-                                            it.result?.user?.displayName?:""
+                                            it.result?.user?.displayName?:"",
+                                            it.result?.user?.photoUrl.toString()
                                         )
                                     } else {
                                         showAlert()
@@ -173,15 +174,31 @@ class AuthActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email: String, provider: ProviderType, name:String) {
+    private fun showHome(email: String, provider: ProviderType, name:String, photoURL: String?) {
 
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
             putExtra("email", email)
             putExtra("provider", provider.name)
             putExtra("name",name)
+
+            if(provider.name == "FACEBOOK"){
+                photoURL?.plus("?type=large")
+                putExtra("photo",photoURL)
+            }
+            else if(provider.name == "GOOGLE"){
+                photoURL?.replace("s96-c", "s400-c")
+                putExtra("photo",photoURL)
+            }
+
+
         }
         startActivity(homeIntent)
     }
+
+    // private fun getHigherResProviderPhotoUrl(photoURL: Uri, provider:ProviderType ){
+    //     photoUrl.toString().replace("s96-c", "s400-c")
+    //     photoUrl.toString().plus("?type=large")
+    // }
 
     private fun showMenu() {
 
@@ -208,7 +225,7 @@ class AuthActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                showHome(account.email ?: "", ProviderType.GOOGLE, account.displayName ?:""
+                                showHome(account.email ?: "", ProviderType.GOOGLE, account.displayName ?:"",account.photoUrl.toString()
                                 )
                             } else {
                                 showAlert()
@@ -220,4 +237,5 @@ class AuthActivity : AppCompatActivity() {
             }
         }
     }
+
 }

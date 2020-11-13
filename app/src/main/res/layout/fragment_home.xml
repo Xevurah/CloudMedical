@@ -40,13 +40,13 @@
                     android:layout_height="match_parent">
 
                     <!-- first element of the row-->
+
                     <ImageView
                         android:id="@+id/UserImageView"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:padding="5dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="10dp"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/persona_i" />
 

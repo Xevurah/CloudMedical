@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CloudMedical</string>
+    <string name="app_name">Klinik</string>
     <string name="prefs_file">com.example.loginactivity.PREFERENCE_FILE_KEY</string>
     <string name="facebook_app_id">348207999605955</string>
     <string name="fb_login_protocol_scheme">fb348207999605955</string>
@@ -11,9 +11,12 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Inicio</string>
-    <string name="menu_history">Diagnóstico</string>
+    <string name="menu_history">Historial</string>
+    <string name="menu_diagnose">Diagnóstico</string>
     <string name="menu_devices">Dispositivo</string>
+    <string name="menu_about">Sobre nosotros</string>
     <string name="menu_syphtoms">Sintomas</string>
+    <string name="menu_close">Cerrar sesion</string>
 
     <string name="user">User</string>
     <string name="datos_del_usuario">Datos del usuario</string>
@@ -24,6 +27,14 @@
     <string name="detalles_de_version">Version del dispositivo</string>
     <string name="detalles_del_Bluetooth_label">Bluetooth:</string>
     <string name="detalles_del_Bluetooth">Direccion Mac del Bluetooth</string>
+
+    <string name="quienes_somos">¿Quienes Somos?</string>
+    <string name="quienes_somos_text">Somos una empresa responsable, creada con el objetivo de facilitar a nuestros usuarios el complicado procedimiento
+        de revisar nuestra salud constantemente o cuando tenemos alguna enfermedad, por ello creamos esta aplicacion movil unica en el mercado para la
+        deteccion de enfermedades basicas que podemos tener sin darnos cuenta de ello o automedicarnos sin o bajo supervision de un medico
+        Nosotros estamos respaldados por medicos capacitados que nos brindan la informacion adecuada para la deteccion de enfermedades.
+    </string>
+
     <string name="status">Status</string>
     <string name="pasos">Pasos (#)</string>
     <string name="frecuencia_cardiaca_ppm">Frecuencia Cardiaca (ppm)</string>
@@ -34,5 +45,9 @@
     <string name="nuevo_diagnostico">Nuevo diagnostico</string>
     <string name="conectar_con_miband">Conectar con MiBand</string>
     <string name="acciones">Acciones</string>
+    <string name="history_text">Historial</string>
+    <string name="symptoms_text">Sintomas</string>
+    <string name="selected_symptoms_text">Sintomas Seleccionados</string>
+    <string name="diagbutton_text">Diagnosticar</string>
 
 </resources>
