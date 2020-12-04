@@ -10,4 +10,11 @@
     <color name="dimgrey">#696969</color>
     <color name="darkslategrey">#2F4F4F</color>
     <color name="darkgrey">#A9A9A9</color>
+    <color name="PrimaryOTP">#536DFE</color>
+    <color name="PrimaryDarkOTP">#536DFE</color>
+    <color name="ColorAccentOTP">#F44336</color>
+    <color name="TextPrimaryOTP">#212121</color>
+    <color name="TextSecondaryOTP">#757575</color>
+    <color name="DividerOTP">#BDBDBD</color>
+    <color name="WhiteOTP">#FFFFFF</color>
 </resources>

@@ -1,42 +1,33 @@
 {
   "project_info": {
-    "project_number": "680756049275",
-    "firebase_url": "https://cloudmedical-c1449.firebaseio.com",
-    "project_id": "cloudmedical-c1449",
-    "storage_bucket": "cloudmedical-c1449.appspot.com"
+    "project_number": "453019428754",
+    "project_id": "klini-585ff",
+    "storage_bucket": "klini-585ff.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:680756049275:android:dff55dabdd922d0bfc79de",
+        "mobilesdk_app_id": "1:453019428754:android:57bb32bd7d2e1440d9034b",
         "android_client_info": {
           "package_name": "com.example.loginactivity"
         }
       },
       "oauth_client": [
         {
-          "client_id": "680756049275-17ib3fcq4bc591tbc6sl1nh0lfo3ie0o.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.loginactivity",
-            "certificate_hash": "87e3ff1d256b9ada34ce2d6d44f4deb683739927"
-          }
-        },
-        {
-          "client_id": "680756049275-4e1ti0stioaprcfj5no1u0at41dsrpog.apps.googleusercontent.com",
+          "client_id": "453019428754-tlnk8mfp2rvvhlasgu88qg67vll6ltnt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCtQhAscGbc9LrH07tgEQMH7zNGj20qXcc"
+          "current_key": "AIzaSyCF3p-LGS3O7MmQr1u4YsSDr5gLemnDU9s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "680756049275-4e1ti0stioaprcfj5no1u0at41dsrpog.apps.googleusercontent.com",
+              "client_id": "453019428754-tlnk8mfp2rvvhlasgu88qg67vll6ltnt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

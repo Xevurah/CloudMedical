@@ -17,6 +17,16 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".HomeActivity" />
         <activity
+            android:name=".SendOTP"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity
+            android:name=".VerifyOTP"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity
             android:name=".AuthActivity"
             android:theme="@style/SplashTheme" >
             <intent-filter>

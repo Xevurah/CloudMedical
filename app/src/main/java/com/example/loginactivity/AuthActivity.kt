@@ -2,7 +2,6 @@ package com.example.loginactivity
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -23,6 +22,8 @@ import kotlinx.android.synthetic.main.activity_auth.*
 
 class AuthActivity : AppCompatActivity() {
 
+    lateinit var mAuth: FirebaseAuth
+
     private val GOOGLE_SIGN_IN = 100
 
     private val callbackManager = CallbackManager.Factory.create()
@@ -34,6 +35,8 @@ class AuthActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+
+        //mAuth = FirebaseAuth.getInstance()
 
         //Analytics Event
         val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -109,7 +112,6 @@ class AuthActivity : AppCompatActivity() {
             val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
-                .requestProfile()
                 .build()
 
             val googleClient = GoogleSignIn.getClient(this, googleConf)
@@ -160,8 +162,8 @@ class AuthActivity : AppCompatActivity() {
                 })
 
         }
-        TwitterButton.setOnClickListener {
-            showMenu()
+        PhoneButton.setOnClickListener {
+            showOTP()
         }
     }
 
@@ -193,6 +195,15 @@ class AuthActivity : AppCompatActivity() {
 
         }
         startActivity(homeIntent)
+    }
+    private fun showOTP() {
+
+        val intent = Intent(this, SendOTP::class.java).apply {
+            putExtra("email", "OTP")
+            putExtra("provider", "OTP")
+            putExtra("name","OTP")
+        }
+        startActivity(intent)
     }
 
     // private fun getHigherResProviderPhotoUrl(photoURL: Uri, provider:ProviderType ){
@@ -233,6 +244,7 @@ class AuthActivity : AppCompatActivity() {
                         }
                 }
             } catch (e: ApiException) {
+                print("Error que impede todo en Google auth ----> $e <------ ERROR TERMINA")
                 showAlert()
             }
         }
