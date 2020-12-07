@@ -54,5 +54,10 @@
     <string name="_52">+52-</string>
     <string name="_123456789">123456789</string>
     <string name="recibir_codigo">Recibir Código</string>
+    <string name="ingrese_numero_movil">Ingrese Numero Movil</string>
+    <string name="escriba_el_c_digo_que_le_enviamos">Escriba el código que le enviamos a</string>
+    <string name="no_recibio_el_c_digo">No recibio el código?</string>
+    <string name="reenviar_otp">REENVIAR OTP</string>
+    <string name="verificar_c_digo">Verificar Código</string>
 
 </resources>

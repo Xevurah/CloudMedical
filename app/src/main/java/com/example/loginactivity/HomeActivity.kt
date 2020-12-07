@@ -35,7 +35,8 @@ import kotlinx.android.synthetic.main.nav_header_navigation.*
 enum class ProviderType {
     BASIC,
     GOOGLE,
-    FACEBOOK
+    FACEBOOK,
+    OTP
 }
 
 class HomeActivity : AppCompatActivity() {
