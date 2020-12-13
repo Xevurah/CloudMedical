@@ -1,10 +1,9 @@
 package com.example.loginactivity
 
 import android.Manifest
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.le.ScanCallback
-import android.bluetooth.le.ScanResult
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -22,25 +21,26 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.loginactivity.databinding.ActivityNavigationBinding
-import com.example.loginactivity.ui.home.HomeFragment
 import com.facebook.login.LoginManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.nav_header_navigation.*
+import java.util.*
 
 
 enum class ProviderType {
     BASIC,
     GOOGLE,
-    FACEBOOK,
-    OTP
+    FACEBOOK
 }
 
 class HomeActivity : AppCompatActivity() {
 
+    private val db = FirebaseFirestore.getInstance()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityNavigationBinding
     private var email : String? = null
@@ -63,7 +63,7 @@ class HomeActivity : AppCompatActivity() {
             ) {
                 Toast.makeText(
                     this,
-                    "The permission to get BLE location data is required",
+                    "Los permisos para encontrar el bluetooth son requeridos",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
@@ -75,11 +75,49 @@ class HomeActivity : AppCompatActivity() {
                 )
             }
         } else {
-            Toast.makeText(this, "Location permissions already granted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Permisos ya concedidos", Toast.LENGTH_SHORT).show()
         }
 
 
-
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (email == document.id){
+                        val prefs = getSharedPreferences(
+                            getString(R.string.prefs_file),
+                            Context.MODE_PRIVATE
+                        ).edit()
+                        for (data in document.data){
+                            Log.d("DESGLOSE F", "${data.key} => ${data.value}")
+                            if (data.key == "batt"){
+                                prefs.putString("batt", data.value as String)
+                                BatteryText.text = data.value as String
+                            }
+                            if (data.key == "freq"){
+                                prefs.putString("freq", data.value as String)
+                                FrequencyText.text = data.value as String
+                            }
+                            if (data.key == "height"){
+                                prefs.putString("height", data.value as String)
+                                HeightText.text = data.value as String
+                            }
+                            if (data.key == "step"){
+                                prefs.putString("step", data.value as String)
+                                FootstepText.text = data.value as String
+                            }
+                            if (data.key == "weight"){
+                                prefs.putString("weight", data.value as String)
+                                WeightText.text = data.value as String
+                            }
+                        }
+                        prefs.apply()
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Error", "Error getting documents.", exception)
+            }
         val bundle = intent.extras
         email = bundle?.getString("email")
         name = bundle?.getString("name")
@@ -155,6 +193,49 @@ class HomeActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_navigation)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+    override fun onBackPressed() {
+        val lang = resources.getString(R.string.langua)
+        if(lang == "en"){
+            AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Logging Out")
+                .setMessage("Are you sure you want to close this session?")
+                .setPositiveButton("Yes"
+                ) { dialog, which -> finish()
+                    val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+                    prefs.clear()
+                    prefs.apply()
+
+                    if (provider == ProviderType.FACEBOOK.name) {
+                        LoginManager.getInstance().logOut()
+                    }
+
+                    FirebaseAuth.getInstance().signOut()
+                }
+                .setNegativeButton("No", null)
+                .show()
+        }
+        if(lang == "es"){
+            AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Cerrando Sesion")
+                .setMessage("Estas seguro que quieres cerrar sesion?")
+                .setPositiveButton("Yes"
+                ) { dialog, which -> finish()
+                    val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+                    prefs.clear()
+                    prefs.apply()
+
+                    if (provider == ProviderType.FACEBOOK.name) {
+                        LoginManager.getInstance().logOut()
+                    }
+
+                    FirebaseAuth.getInstance().signOut()
+                }
+                .setNegativeButton("No", null)
+                .show()
+        }
+    }
 
     private fun setup(email: String, provider: String, name: String, photourl: String){
         title = "Inicio"
@@ -189,30 +270,98 @@ class HomeActivity : AppCompatActivity() {
 
         logOutUpButton.setOnClickListener{
 
-            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-            prefs.clear()
-            prefs.apply()
+            val lang = resources.getString(R.string.langua)
+            if(lang == "en"){
+                AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Logging Out")
+                    .setMessage("Did you want to close this session?")
+                    .setPositiveButton("Yes"
+                    ) { dialog, which -> finish()
+                        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+                        prefs.clear()
+                        prefs.apply()
 
-            if (provider == ProviderType.FACEBOOK.name) {
-                LoginManager.getInstance().logOut()
+                        if (provider == ProviderType.FACEBOOK.name) {
+                            LoginManager.getInstance().logOut()
+                        }
+
+                        FirebaseAuth.getInstance().signOut()
+                        onBackPressed()
+                    }
+                    .setNegativeButton("No", null)
+                    .show()
+
             }
+            if(lang == "es"){
+                AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Cerrando Sesion")
+                    .setMessage("Quieres cerrar sesion?")
+                    .setPositiveButton("Yes"
+                    ) { dialog, which -> finish()
+                        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+                        prefs.clear()
+                        prefs.apply()
 
-            FirebaseAuth.getInstance().signOut()
-            onBackPressed()
+                        if (provider == ProviderType.FACEBOOK.name) {
+                            LoginManager.getInstance().logOut()
+                        }
+
+                        FirebaseAuth.getInstance().signOut()
+                        onBackPressed()
+                    }
+                    .setNegativeButton("No", null)
+                    .show()
+            }
         }
 
         logoutImg.setOnClickListener{
 
-            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-            prefs.clear()
-            prefs.apply()
+            val lang = resources.getString(R.string.langua)
+            if(lang == "en"){
+                AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Logging Out")
+                    .setMessage("Did you want to close this session?")
+                    .setPositiveButton("Yes"
+                    ) { dialog, which -> finish()
+                        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+                        prefs.clear()
+                        prefs.apply()
 
-            if (provider == ProviderType.FACEBOOK.name) {
-                LoginManager.getInstance().logOut()
+                        if (provider == ProviderType.FACEBOOK.name) {
+                            LoginManager.getInstance().logOut()
+                        }
+
+                        FirebaseAuth.getInstance().signOut()
+                        onBackPressed()
+                    }
+                    .setNegativeButton("No", null)
+                    .show()
+
             }
+            if(lang == "es"){
+                AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Cerrando Sesion")
+                    .setMessage("Quieres cerrar sesion?")
+                    .setPositiveButton("Yes"
+                    ) { dialog, which -> finish()
+                        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+                        prefs.clear()
+                        prefs.apply()
 
-            FirebaseAuth.getInstance().signOut()
-            onBackPressed()
+                        if (provider == ProviderType.FACEBOOK.name) {
+                            LoginManager.getInstance().logOut()
+                        }
+
+                        FirebaseAuth.getInstance().signOut()
+                        onBackPressed()
+                    }
+                    .setNegativeButton("No", null)
+                    .show()
+            }
         }
     }
 

@@ -58,7 +58,16 @@ class SendOTP : AppCompatActivity() {
                     ) {
                         progressBar.visibility = View.GONE
                         buttonGetOTP.visibility = View.VISIBLE
+                        val bundle = intent.extras
+                        val email = bundle?.getString("email")
+                        val name = bundle?.getString("name")
+                        val provider = bundle?.getString("provider")
+                        val photo = bundle?.getString("photo")
                         val intent = Intent(applicationContext, VerifyOTP::class.java)
+                        intent.putExtra("email", email)
+                        intent.putExtra("name", name)
+                        intent.putExtra("provider", provider)
+                        intent.putExtra("photo", photo)
                         intent.putExtra("movil", inputMobile.text.toString())
                         intent.putExtra("verificationId", verificationId)
                         startActivity(intent)

@@ -11,10 +11,12 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.concurrent.TimeUnit
 
 
 class VerifyOTP : AppCompatActivity()  {
+    private val db = FirebaseFirestore.getInstance()
     private lateinit var inputCode1:EditText
     private lateinit var inputCode2:EditText
     private lateinit var inputCode3:EditText
@@ -64,10 +66,26 @@ class VerifyOTP : AppCompatActivity()  {
                 FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
                     .addOnCompleteListener(this){ task ->
                         if (task.isSuccessful) {
+                            val bundle = intent.extras
+                            val email = bundle?.getString("email")
+                            val name = bundle?.getString("name")
+                            val provider = bundle?.getString("provider")
+                            val photo = bundle?.getString("photo")
+                            if (email != null) {
+                                db.collection("users").document(email).update(
+                                    hashMapOf(
+                                        "celphone" to "" + String.format(
+                                            "+52-%s", intent.getStringExtra("movil")
+                                        ) + ""
+                                    ) as Map<String, Any>
+                                )
+                            }
                             val homeIntent = Intent(applicationContext, HomeActivity::class.java).apply {
-                                putExtra("email", "OTP")
-                                putExtra("provider", "OTP")
-                                putExtra("name","OTP") }
+                                putExtra("email", email)
+                                putExtra("name", name)
+                                putExtra("provider",provider)
+                                putExtra("photo",photo)
+                            }
                             homeIntent.flags =
                                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 

@@ -3,6 +3,7 @@ package com.example.loginactivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +19,12 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_auth.*
 
 class AuthActivity : AppCompatActivity() {
+
+    private val db = FirebaseFirestore.getInstance()
 
     lateinit var mAuth: FirebaseAuth
 
@@ -64,7 +68,48 @@ class AuthActivity : AppCompatActivity() {
 
         if (email != null && provider != null && name != null) {
             authLayout.visibility = View.INVISIBLE
-            showHome(email, ProviderType.valueOf(provider),name,photoURL)
+            val homeIntent = Intent(this, HomeActivity::class.java).apply {
+                putExtra("email", email)
+                putExtra("provider", provider)
+                putExtra("name",name)
+
+                if(provider == "FACEBOOK"){
+                    photoURL?.plus("?type=large")
+                    putExtra("photo",photoURL)
+                }
+                else if(provider == "GOOGLE"){
+                    photoURL?.replace("s96-c", "s400-c")
+                    putExtra("photo",photoURL)
+                }
+
+
+            }
+
+            var noexist = false
+            db.collection("users")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d("ID F", "${document.id} => ${document.data}")
+                        if (email == document.id){
+                            noexist = true
+                        }
+                    }
+                    if(!noexist){
+                        Log.d("NOEXIST F", "creando nuevo email")
+                        db.collection("users").document(email).set(
+                            hashMapOf("provider" to provider,"name" to name
+                            )
+                        )
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("Error", "Error getting documents.", exception)
+                }
+
+
+
+            startActivity(homeIntent)
         }
 
     }
@@ -162,9 +207,9 @@ class AuthActivity : AppCompatActivity() {
                 })
 
         }
-        PhoneButton.setOnClickListener {
-            showOTP()
-        }
+        //PhoneButton.setOnClickListener {
+        //    showOTP()
+        //}
     }
 
     private fun showAlert() {
@@ -178,7 +223,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun showHome(email: String, provider: ProviderType, name:String, photoURL: String?) {
 
-        val homeIntent = Intent(this, HomeActivity::class.java).apply {
+        val homeIntent = Intent(this, SendOTP::class.java).apply {
             putExtra("email", email)
             putExtra("provider", provider.name)
             putExtra("name",name)
@@ -194,17 +239,42 @@ class AuthActivity : AppCompatActivity() {
 
 
         }
+
+        var noexist = false
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("ID F", "${document.id} => ${document.data}")
+                    if (email == document.id){
+                        noexist = true
+                    }
+                }
+                if(!noexist){
+                    Log.d("NOEXIST F", "creando nuevo email")
+                    db.collection("users").document(email).set(
+                        hashMapOf("provider" to provider,"name" to name
+                        )
+                    )
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Error", "Error getting documents.", exception)
+            }
+
+
+
         startActivity(homeIntent)
     }
-    private fun showOTP() {
+    //private fun showOTP() {
 
-        val intent = Intent(this, SendOTP::class.java).apply {
-            putExtra("email", "OTP")
-            putExtra("provider", "OTP")
-            putExtra("name","OTP")
-        }
-        startActivity(intent)
-    }
+    //    val intent = Intent(this, SendOTP::class.java).apply {
+    //        putExtra("email", "OTP")
+    //       putExtra("provider", "OTP")
+    //       putExtra("name","OTP")
+    //   }
+    //   startActivity(intent)
+    // }
 
     // private fun getHigherResProviderPhotoUrl(photoURL: Uri, provider:ProviderType ){
     //     photoUrl.toString().replace("s96-c", "s400-c")
